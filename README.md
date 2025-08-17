@@ -1,1 +1,1 @@
-# LearnVTK
+# 这是一个QT+VTK学习示例项目
