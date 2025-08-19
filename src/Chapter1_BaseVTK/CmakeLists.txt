@@ -1,0 +1,35 @@
+
+add_executable(Chapter1_BaseVTKDemo main.cpp
+        MainRenderWindow.cpp
+        MainRenderWindow.h
+        MainRenderWindow.ui)
+
+target_link_libraries(Chapter1_BaseVTKDemo PRIVATE
+        VTK::CommonCore #通用核心
+        VTK::RenderingCore #渲染核心
+        VTK::CommonColor #通用颜色
+        VTK::FiltersSources #几何体生成器
+        VTK::InteractionStyle #交互样式
+        VTK::GUISupportQt #Qt支持
+        VTK::CommonDataModel
+        VTK::FiltersCore
+        VTK::RenderingFreeType
+        VTK::RenderingAnnotation
+        VTK::RenderingContextOpenGL2
+        VTK::RenderingGL2PSOpenGL2
+
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
+        Qt6::OpenGL
+        Qt6::OpenGLWidgets
+)
+
+# 启用自动 MOC/UIC/RCC（Qt6）
+set_target_properties(Chapter1_BaseVTKDemo PROPERTIES
+        AUTOMOC ON
+        AUTOUIC ON
+        AUTORCC ON
+)
+
+deploy_qt_for_target(Chapter1_BaseVTKDemo)
