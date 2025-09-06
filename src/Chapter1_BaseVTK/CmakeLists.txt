@@ -1,22 +1,38 @@
 
+
 add_executable(Chapter1_BaseVTKDemo main.cpp
         MainRenderWindow.cpp
         MainRenderWindow.h
-        MainRenderWindow.ui)
+        MainRenderWindow.ui
+        CGNSDataParser.cpp
+        CGNSDataParser.h
+        NodeTreeWidget.cpp
+        NodeTreeWidget.h
+        NodeTreeWidget.cpp
+)
+
+target_link_directories(Chapter1_BaseVTKDemo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
 
 target_link_libraries(Chapter1_BaseVTKDemo PRIVATE
-        VTK::CommonCore #通用核心
-        VTK::RenderingCore #渲染核心
-        VTK::CommonColor #通用颜色
-        VTK::FiltersSources #几何体生成器
-        VTK::InteractionStyle #交互样式
-        VTK::GUISupportQt #Qt支持
-        VTK::CommonDataModel
-        VTK::FiltersCore
-        VTK::RenderingFreeType
-        VTK::RenderingAnnotation
-        VTK::RenderingContextOpenGL2
-        VTK::RenderingGL2PSOpenGL2
+        ${VTK_LIBRARIES} #加载所有库
+#        VTK::CommonCore #通用核心
+#        VTK::RenderingCore #渲染核心
+#        VTK::CommonColor #通用颜色
+#        VTK::FiltersSources #几何体生成器
+#        VTK::InteractionStyle #交互样式
+#        VTK::GUISupportQt #Qt支持
+#        VTK::CommonDataModel
+#        VTK::FiltersCore
+#        VTK::FiltersGeneral
+#        VTK::RenderingFreeType
+#        VTK::RenderingAnnotation
+#        VTK::RenderingContextOpenGL2
+#        VTK::RenderingGL2PSOpenGL2
+#        VTK::cgns
+#        VTK::IOHDF
+#        VTK::IOCGNSReader
+        CGNS::CGNS
 
         Qt6::Core
         Qt6::Gui

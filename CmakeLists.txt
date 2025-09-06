@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 
-# 可选：自动检测 vcpkg 工具链
+#可选 包名不匹配警告
+cmake_policy(SET CMP0114 OLD)
+
+# 必须设置：自动检测 vcpkg 工具链
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND EXISTS "E:/GitToolProject/vcpkg/scripts/buildsystems/vcpkg.cmake")
     set(CMAKE_TOOLCHAIN_FILE "E:/GitToolProject/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 endif()
@@ -14,6 +17,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/app/binr)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
+
 # 设置CMake模块路径
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 # 2. 包含公用函数
@@ -23,6 +27,7 @@ include(DeployQt)
 # 3. 查找依赖（用vcpkg自动查找，无需自定义Find模块）
 find_package(VTK REQUIRED )
 find_package(Qt6 REQUIRED )
+find_package(CGNS REQUIRED )
 
 # 5. 添加章节子项目
 add_subdirectory(src/Chapter1_BaseVTK)

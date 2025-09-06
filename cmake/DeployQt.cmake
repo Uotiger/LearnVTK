@@ -92,11 +92,11 @@ function(deploy_qt_for_target TARGET)
         # 添加部署命令 - 简化参数并修复顺序
     add_custom_command(TARGET ${DEPLOY_TARGET} POST_BUILD
             COMMAND ${WINDEPLOYQT_DEBUG} ${TARGET_OUTPUT_DIR}/${TARGET}.exe
-            COMMENT "Running windeployqt to deploy Qt dependencies"
+            COMMAND ${CMAKE_COMMAND} -E echo "Running windeployqt to deploy Qt dependencies"
 
             # 日志输出
-            COMMAND ${CMAKE_COMMAND} -E echo "\n==========================================\n"
-            COMMAND ${CMAKE_COMMAND} -E echo "Starting Qt deployment for $<CONFIG> build\n"
+            COMMAND ${CMAKE_COMMAND} -E echo "=========================================="
+            COMMAND ${CMAKE_COMMAND} -E echo "Starting Qt deployment for $<CONFIG> build"
             COMMAND ${CMAKE_COMMAND} -E echo "Using tool: $<$<CONFIG:Debug>:${WINDEPLOYQT_DEBUG}>$<$<CONFIG:Release>:${WINDEPLOYQT_RELEASE}>"
             COMMAND ${CMAKE_COMMAND} -E echo "Target executable: $<TARGET_FILE:${TARGET}>"
             COMMAND ${CMAKE_COMMAND} -E echo "Working directory: ${TARGET_OUTPUT_DIR}"

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>800</height>
+    <width>1400</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainRenderWindow</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,1">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -30,11 +30,8 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QVTKOpenGLNativeWidget" name="vtkWidget"/>
-   </item>
-   <item>
     <widget class="QWidget" name="widget" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout" stretch="2,3">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="1,3">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -147,32 +144,6 @@
           <bool>true</bool>
          </property>
         </widget>
-        <widget class="QLineEdit" name="lineEdit_path">
-         <property name="geometry">
-          <rect>
-           <x>162</x>
-           <y>235</y>
-           <width>80</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="btn_loadFile">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>235</y>
-           <width>75</width>
-           <height>24</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>加载文件</string>
-         </property>
-        </widget>
        </widget>
       </item>
       <item>
@@ -190,7 +161,7 @@
          <item>
           <widget class="QTabWidget" name="tabWidget">
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="tab">
             <attribute name="title">
@@ -241,6 +212,73 @@
             <attribute name="title">
              <string>网格</string>
             </attribute>
+            <widget class="QWidget" name="verticalLayoutWidget_2">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>251</width>
+               <height>621</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <property name="spacing">
+               <number>4</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_loadFile">
+                <property name="text">
+                 <string>加载文件</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="NodeTreeWidget" name="nodeTree">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <column>
+                 <property name="text">
+                  <string notr="true">1</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_showMesh">
+                <property name="text">
+                 <string>显示网格</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cbb_cloud"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_showCloud">
+                <property name="text">
+                 <string>显示云图</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </widget>
          </item>
@@ -250,6 +288,19 @@
      </layout>
     </widget>
    </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_3" stretch="5,1">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QVTKOpenGLNativeWidget" name="vtkWidget"/>
+     </item>
+     <item>
+      <widget class="QListWidget" name="logWidget"/>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -257,6 +308,11 @@
    <class>QVTKOpenGLNativeWidget</class>
    <extends>QOpenGLWidget</extends>
    <header>QVTKOpenGLNativeWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>NodeTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>NodeTreeWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
