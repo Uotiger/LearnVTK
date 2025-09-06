@@ -1,6 +1,6 @@
 # 这是一个QT+VTK学习示例项目
 ## 项目简介
-    这是一个基于vtk9.3版本 qt6.9版本的项目，依赖vcpkg构建的windows桌面项目; 需要在vcpkg中安装vtk与qt。
+    这是一个基于vtk9.3版本 qt6.9版本的练习项目，依赖vcpkg构建的windows桌面项目; 需要在vcpkg中安装vtk与qt。
 
 ## 安装依赖
     本项目使用vcpkg 作为包管理工具来管理 VTK 和 QT 依赖。
