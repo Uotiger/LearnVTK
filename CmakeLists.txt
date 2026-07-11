@@ -3,13 +3,16 @@ cmake_minimum_required(VERSION 3.12)
 #可选 包名不匹配警告
 cmake_policy(SET CMP0114 OLD)
 
-# 必须设置：自动检测 vcpkg 工具链
-if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND EXISTS "E:/GitToolProject/vcpkg/scripts/buildsystems/vcpkg.cmake")
-    set(CMAKE_TOOLCHAIN_FILE "E:/GitToolProject/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+# vcpkg 工具链 — 通过预设或环境变量 VCPKG_ROOT 指定
+if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
+    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+endif()
+if(NOT EXISTS "${CMAKE_TOOLCHAIN_FILE}")
+    message(FATAL_ERROR "vcpkg toolchain not found: ${CMAKE_TOOLCHAIN_FILE}. Set VCPKG_ROOT environment variable.")
 endif()
 
 project(learnVTK LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 20)
 
 # 1. 设置输出目录
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/app/bin)

@@ -1,9 +1,19 @@
-#ide
+# IDE
 .vs/*
+.vscode/*
 .idea/*
 
-#project
-app/*
+# Build output
 build/*
 cmake-build-debug/*
 cmake-build-release/*
+out/*
+
+# MSVC artifacts
+*.pdb
+*.ilk
+*.exp
+*.obj
+*.exe
+*.dll
+*.lib

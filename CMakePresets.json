@@ -1,0 +1,26 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "description": "Debug build (vcpkg toolchain auto-detected via VCPKG_ROOT)",
+      "binaryDir": "${sourceDir}/out/build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_FLAGS": "-DQT_QML_DEBUG",
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release",
+      "description": "Release build (vcpkg toolchain auto-detected via VCPKG_ROOT)",
+      "binaryDir": "${sourceDir}/out/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+      }
+    }
+  ]
+}
