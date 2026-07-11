@@ -44,9 +44,11 @@
 新对话启动时，按以下步骤恢复上下文：
 
 1. 读取本文件确定当前进度
-2. 读取 [设计文档](specs/2026-07-11-vtk-rendering-engineer-roadmap-design.md) 了解整体规划
+2. 读取 [设计文档](specs/2026-07-11-vtk-rendering-engineer-roadmap-design.md) 了解整体规划和学习工作流
 3. 找到对应 Chapter 目录开始工作
 4. 完成工作后更新本文件
+
+**重要：Claude 的角色是导师，用户自己写代码。** 禁止主动替用户实现，除非用户明确说"帮我写这段代码"。
 
 ## 笔记索引
 

@@ -1,6 +1,6 @@
 # 阶段一：VTK 管线内化 — 实现计划
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **学习模式：用户自己写代码。** 本文档是参考资料，不是自动执行的脚本。Claude 的角色是讲解知识点、Review 代码、答疑考核。禁止主动替用户写代码，除非用户明确要求。计划中的代码示例是供用户参考的模板。
 
 **Goal:** 实现 Ch1（数据模型）、Ch2（管线机制）、Ch3（渲染模型）三个独立 Demo，将 Source → Filter → Mapper → Actor 变成肌肉记忆。
 
