@@ -33,4 +33,5 @@ find_package(Qt6 REQUIRED )
 find_package(CGNS REQUIRED )
 
 # 5. 添加章节子项目
-add_subdirectory(src/Chapter1_BaseVTK)
+# add_subdirectory(src/_Backup/Chapter1_BaseVTK)  # 旧版自学代码，已备份
+# 新章节由学习计划逐步添加（当前: Chapter1_DataModel → Chapter2_Pipeline → Chapter3_Rendering）
