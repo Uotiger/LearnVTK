@@ -1,4 +1,4 @@
-# Chapter 2 知识指南：VTK 数据模型
+# Chapter 1 知识指南：VTK 数据模型
 
 > 配套实现计划：[阶段一计划](../plans/2026-07-11-stage1-pipeline-foundation.md) — Task 1, 2
 

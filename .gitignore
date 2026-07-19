@@ -3,6 +3,9 @@
 .vscode/*
 .idea/*
 
+# Obsidian
+.obsidian/*
+
 # Build output
 build/*
 cmake-build-debug/*
