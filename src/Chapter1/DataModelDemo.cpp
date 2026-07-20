@@ -20,6 +20,7 @@
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPointData.h>
+#include <vtkCellData.h>
 #include <vtkRectilinearGrid.h>
 #include <vtkStructuredGrid.h>
 #include <vtkTetra.h>
@@ -128,23 +129,38 @@ void DataModelDemo::buildImageData()
     image->SetOrigin(0.0,0.0,0.0);  // 设置原点
     image->SetSpacing(1.0,1.0,1.0); // 设置采样间距
 
-    // 创建标量数据
-    auto scalars = vtkSmartPointer<vtkFloatArray>::New();
-    scalars->SetName("Distance"); // 设置标量名称
-    scalars->SetNumberOfComponents(1); // 单分量标量
+    // --- 原代码：Distance 标量（表面值太接近，色差细微）---
+    // auto scalars = vtkSmartPointer<vtkFloatArray>::New();
+    // scalars->SetName("Distance");
+    // scalars->SetNumberOfComponents(1);
+    // int dims[3];
+    // image->GetDimensions(dims);
+    // for (int k = 0; k < dims[2]; ++k) {
+    //     for (int j = 0; j < dims[1]; ++j) {
+    //         for (int i = 0; i < dims[0]; ++i) {
+    //             double x = i - dims[0] / 2.0;
+    //             double y = j - dims[1] / 2.0;
+    //             double z = k - dims[2] / 2.0;
+    //             scalars->InsertNextValue(std::sqrt(x*x + y*y + z*z));
+    //         }
+    //     }
+    // }
+    // image->GetPointData()->SetScalars(scalars);
+
+    // --- 新版：X 坐标线性标量（-X 到 +X 渐变色带，表面直接可见）---
+    auto xScalars = vtkSmartPointer<vtkFloatArray>::New();
+    xScalars->SetName("XCoordinate");
+    xScalars->SetNumberOfComponents(1);
     int dims[3];
-    image->GetDimensions(dims); // 获取维度
+    image->GetDimensions(dims);
     for (int k = 0; k < dims[2]; ++k) {
         for (int j = 0; j < dims[1]; ++j) {
             for (int i = 0; i < dims[0]; ++i) {
-                double x = i - dims[0] / 2.0;
-                double y = j - dims[1] / 2.0;
-                double z = k - dims[2] / 2.0;
-                scalars->InsertNextValue(std::sqrt(x*x + y*y + z*z)); // 插入标量值
+                xScalars->InsertNextValue(i);  // 只用 X 索引，值从 0→9 线性增长
             }
         }
     }
-    image->GetPointData()->SetScalars(scalars); // 设置标量数据
+    image->GetPointData()->SetScalars(xScalars);
     m_currentDataset = image;
 }
 
@@ -153,7 +169,49 @@ void DataModelDemo::buildRectilinearGrid()
     // TODO: 实现 RectilinearGrid 构造
     // 参考计划 Task 2 Step 2
     auto grid = vtkSmartPointer<vtkRectilinearGrid>::New();
-    // ... 你的代码 ...
+    auto xCoords = vtkSmartPointer<vtkFloatArray>::New();
+    xCoords->SetName("X");
+    xCoords->InsertNextValue(0.0);
+    xCoords->InsertNextValue(0.5);
+    xCoords->InsertNextValue(1.0);
+    xCoords->InsertNextValue(2.5);
+    xCoords->InsertNextValue(4.0);
+    xCoords->InsertNextValue(6.0);
+    xCoords->InsertNextValue(8.0);
+    auto yCoords = vtkSmartPointer<vtkFloatArray>::New();
+    yCoords->SetName("Y");
+    yCoords->InsertNextValue(0.0);
+    yCoords->InsertNextValue(0.5);
+    yCoords->InsertNextValue(1.0);
+    yCoords->InsertNextValue(3.0);
+    yCoords->InsertNextValue(5.0);
+    yCoords->InsertNextValue(7.0);
+    auto zCoords = vtkSmartPointer<vtkFloatArray>::New();
+    zCoords->SetName("Z");
+    for (int i = 0; i < 5; ++i) {
+        zCoords->InsertNextValue(i * 0.5);
+    }
+    grid->SetXCoordinates(xCoords);
+    grid->SetYCoordinates(yCoords);
+    grid->SetZCoordinates(zCoords);
+    grid->SetDimensions(xCoords->GetNumberOfTuples(), yCoords->GetNumberOfTuples(), zCoords->GetNumberOfTuples());
+
+    // 添加标量数据
+    auto scalars = vtkSmartPointer<vtkFloatArray>::New();
+    scalars->SetName("CellVolume");
+    int dims[3];
+    grid->GetDimensions(dims);
+    for (int k = 0; k < dims[2] - 1; ++k){
+        for (int j = 0; j < dims[1] - 1; ++j){
+            for (int i = 0; i < dims[0] - 1; ++i){
+                double dx = xCoords->GetValue(i + 1) - xCoords->GetValue(i);
+                double dy = yCoords->GetValue(j + 1) - yCoords->GetValue(j);
+                double dz = zCoords->GetValue(k + 1) - zCoords->GetValue(k);
+                scalars->InsertNextValue(dx * dy * dz); // 插入单元体积
+            }
+        }
+    }
+    grid->GetCellData()->SetScalars(scalars); // 设置单元标量数据
     m_currentDataset = grid;
 }
 
@@ -200,6 +258,11 @@ void DataModelDemo::onDatasetTypeChanged(int index)
     auto mapper = vtkSmartPointer<vtkDataSetMapper>::New();
     mapper->SetInputData(m_currentDataset);
     mapper->ScalarVisibilityOn();
+    // 显式设置色表范围，确保渐变正确（默认自动检测有时不准确）
+    double range[2];
+    m_currentDataset->GetScalarRange(range);
+    mapper->SetScalarRange(range);
+    // mapper->SetScalarModeToUseCellData();
 
     m_actor->SetMapper(mapper);
     m_actor->GetProperty()->SetRepresentationToSurface();
